@@ -7,22 +7,27 @@
         mc:Ignorable="d"
         Title="MainEmpty" Height="600" Width="800">
     <Grid>
-        <Grid Margin="0,0,680,464">
-            <Image Margin="0,0,0,-1" Source="/Image2.png" Stretch="Fill" RenderTransformOrigin="0.667,0.661"/>
+        <!-- Твое изображение -->
+        <Grid Margin="0,0,609,392">
+            <Image x:Name="ProfileImage" Margin="12,10,10,10" Source="/Image2.png" 
+                   Stretch="Fill" RenderTransformOrigin="0.667,0.661"
+                   MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave"
+                   Cursor="Hand"/>
         </Grid>
-        <Grid Margin="0,125,0,402">
+
+        <!-- Остальной твой код -->
+        <Grid Margin="0,96,0,402">
             <Label Content="Добро пожаловать!" HorizontalAlignment="Left" Margin="196,0,0,0" VerticalAlignment="Center" FontSize="36"/>
         </Grid>
-        <Grid Margin="0,182,0,262">
+        <Grid Margin="0,182,0,245">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="169*"/>
                 <ColumnDefinition Width="10*"/>
                 <ColumnDefinition Width="221*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Создайте свою первую&#xD;&#xA;задачу!" HorizontalAlignment="Left" Margin="194,10,0,0" VerticalAlignment="Top" FontSize="36" Width="522" Height="130" Grid.ColumnSpan="3"/>
+            <Label Content="Создайте свою первую&#xD;&#xA;задачу!" HorizontalAlignment="Left" Margin="196,28,0,0" FontSize="36" Width="520" Grid.ColumnSpan="3"/>
         </Grid>
-        <Grid Margin="0,344,0,184">
-
+        <Grid Margin="0,368,0,127">
             <Button Content="Создать первую задачу" HorizontalAlignment="Left" Margin="346,8,0,0" VerticalAlignment="Top" Background="#FFDE4949" Height="38" Width="228" FontSize="18" Foreground="White">
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -31,9 +36,13 @@
                 </Button.Resources>
             </Button>
         </Grid>
-        <Menu Margin="-199,0,800,399" Height="192" Background="#FFCAC7C7" Cursor="Hand"/>
+
+        <!-- Меню за пределами формы (исходное положение) -->
+        <Menu x:Name="LeftMenu" Margin="-199,0,800,399" Height="192" Background="#FFCAC7C7" Cursor="Hand"
+              MouseEnter="LeftMenu_MouseEnter" MouseLeave="LeftMenu_MouseLeave"/>
+
+        <!-- Старые кнопки (оставляем как было) -->
         <Button Content="Выход" HorizontalAlignment="Left" Margin="-170,26,0,0" VerticalAlignment="Top" Height="51" Width="70" Background="#FFCAC7C7" BorderBrush="#FFCAC7C7" FontSize="20"/>
         <Button Content="Изменить&#xD;&#xA;фото &#xD;&#xA;профиля" HorizontalAlignment="Left" Margin="-170,82,0,0" VerticalAlignment="Top" Height="81" Width="99" Click="Button_Click" FontSize="20" BorderBrush="#FFCAC7C7" Background="#FFCAC7C7"/>
-
     </Grid>
 </Window>

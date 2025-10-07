@@ -50,28 +50,25 @@ namespace Desktop
                 this.Close();
             }
         }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Возврат на главное окно
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
+            // Просто закрываем окно регистрации
             this.Close();
         }
     }
+
     public static class FieldValidator
     {
         public static bool ValidateEmail(string email)
         {
-            // Паттерн "*@*.*" где * - любое количество символов
             if (string.IsNullOrWhiteSpace(email))
                 return false;
 
-            // Проверяем наличие @ и точки после @
             int atIndex = email.IndexOf('@');
             if (atIndex <= 0 || atIndex == email.Length - 1)
                 return false;
 
-            // Проверяем наличие точки после @
             string afterAt = email.Substring(atIndex + 1);
             return afterAt.Contains(".") && afterAt.IndexOf('.') > 0 && afterAt.IndexOf('.') < afterAt.Length - 1;
         }
