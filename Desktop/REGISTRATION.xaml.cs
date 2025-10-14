@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace Desktop
 {
-    /// <summary>
-    /// Логика взаимодействия для REGISTRATION.xaml
-    /// </summary>
     public partial class REGISTRATION : Window
     {
         public REGISTRATION()
@@ -35,10 +32,42 @@ namespace Desktop
             string email = EmailTextBox.Text;
             string password = PasswordTextBox.Text;
             string confirmPassword = ConfirmPasswordTextBox.Text;
-            bool allValid = FieldValidator.ValidateAllFields(name, email, password, confirmPassword);
-            RegisterButton.IsEnabled = allValid;
 
+            // Простая валидация без FieldValidator
+            bool allValid = ValidateName(name) &&
+                           ValidateEmail(email) &&
+                           ValidatePassword(password) &&
+                           password == confirmPassword;
+
+            RegisterButton.IsEnabled = allValid;
             return allValid;
+        }
+
+        private bool ValidateEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email) || email == "example@mail.ru")
+                return false;
+
+            int atIndex = email.IndexOf('@');
+            if (atIndex <= 0 || atIndex == email.Length - 1)
+                return false;
+
+            string afterAt = email.Substring(atIndex + 1);
+            return afterAt.Contains(".") && afterAt.IndexOf('.') > 0 && afterAt.IndexOf('.') < afterAt.Length - 1;
+        }
+
+        private bool ValidatePassword(string password)
+        {
+            return !string.IsNullOrWhiteSpace(password) &&
+                   password != "Введите пароль" &&
+                   password.Length >= 6;
+        }
+
+        private bool ValidateName(string name)
+        {
+            return !string.IsNullOrWhiteSpace(name) &&
+                   name != "Введите имя пользователя" &&
+                   name.Length >= 3;
         }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
@@ -53,42 +82,7 @@ namespace Desktop
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Просто закрываем окно регистрации
             this.Close();
-        }
-    }
-
-    public static class FieldValidator
-    {
-        public static bool ValidateEmail(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-                return false;
-
-            int atIndex = email.IndexOf('@');
-            if (atIndex <= 0 || atIndex == email.Length - 1)
-                return false;
-
-            string afterAt = email.Substring(atIndex + 1);
-            return afterAt.Contains(".") && afterAt.IndexOf('.') > 0 && afterAt.IndexOf('.') < afterAt.Length - 1;
-        }
-
-        public static bool ValidatePassword(string password)
-        {
-            return !string.IsNullOrWhiteSpace(password) && password.Length >= 6;
-        }
-
-        public static bool ValidateName(string name)
-        {
-            return !string.IsNullOrWhiteSpace(name) && name.Length >= 3;
-        }
-
-        public static bool ValidateAllFields(string name, string email, string password, string confirmPassword)
-        {
-            return ValidateName(name) &&
-                   ValidateEmail(email) &&
-                   ValidatePassword(password) &&
-                   password == confirmPassword;
         }
     }
 }
