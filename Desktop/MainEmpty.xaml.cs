@@ -15,7 +15,6 @@ namespace Desktop
             InitializeComponent();
         }
 
-        // Когда курсор наводится на изображение - меню выезжает
         private void Image_MouseEnter(object sender, MouseEventArgs e)
         {
             if (!isMenuVisible)
@@ -24,10 +23,8 @@ namespace Desktop
             }
         }
 
-        // Когда курсор уходит с изображения
         private void Image_MouseLeave(object sender, MouseEventArgs e)
         {
-            // Не скрываем сразу, ждем проверки в таймере
             System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += (s, args) =>
@@ -46,30 +43,26 @@ namespace Desktop
         {
             isMenuVisible = true;
 
-            // Анимация выезда из-за левого края
             ThicknessAnimation animation = new ThicknessAnimation();
-            animation.From = new Thickness(-199, 0, 800, 399); // Скрыто слева
-            animation.To = new Thickness(0, 0, 599, 399);      // Показано
+            animation.From = new Thickness(-199, 0, 800, 399); 
+            animation.To = new Thickness(0, 0, 599, 399);      
             animation.Duration = TimeSpan.FromSeconds(0.3);
 
             LeftMenu.BeginAnimation(MarginProperty, animation);
         }
 
-        // Скрываем меню с анимацией
         private void HideLeftMenu()
         {
             isMenuVisible = false;
 
-            // Анимация скрытия за левый край
             ThicknessAnimation animation = new ThicknessAnimation();
-            animation.From = new Thickness(0, 0, 599, 399);    // Показано
-            animation.To = new Thickness(-199, 0, 800, 399);   // Скрыто слева
+            animation.From = new Thickness(0, 0, 599, 399);    
+            animation.To = new Thickness(-199, 0, 800, 399);   
             animation.Duration = TimeSpan.FromSeconds(0.3);
 
             LeftMenu.BeginAnimation(MarginProperty, animation);
         }
 
-        // Проверяем, находится ли курсор над меню
         private bool IsMouseOverMenu()
         {
             try
@@ -84,7 +77,6 @@ namespace Desktop
             }
         }
 
-        // Проверяем, находится ли курсор над изображением
         private bool IsMouseOverImage()
         {
             try
@@ -99,7 +91,6 @@ namespace Desktop
             }
         }
 
-        // Метод изменения изображения
         private void ChangeImage()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -124,7 +115,6 @@ namespace Desktop
             }
         }
 
-        // Обработчик для кнопки "Изменить фото профиля"
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ChangeImage();
@@ -133,12 +123,11 @@ namespace Desktop
         // Обработчики для меню
         private void LeftMenu_MouseEnter(object sender, MouseEventArgs e)
         {
-            // Ничего не делаем - меню остается открытым
+       
         }
 
         private void LeftMenu_MouseLeave(object sender, MouseEventArgs e)
         {
-            // Таймер для плавного скрытия
             System.Windows.Threading.DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += (s, args) =>
