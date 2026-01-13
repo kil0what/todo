@@ -96,51 +96,55 @@ namespace Desktop
             }
         }
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Проверка на null
-            if (UserNameTextBox == null || EmailTextBox == null ||
-                PasswordTextBox == null || ConfirmPasswordTextBox == null)
+            private void RegisterButton_Click(object sender, RoutedEventArgs e)
             {
-                MessageBox.Show("Ошибка инициализации полей", "Ошибка",
-                               MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            try
-            {
-                string name = (UserNameTextBox.Foreground.ToString() == "#FFCACACA" || UserNameTextBox.Text == "Введите имя пользователя") ? "" : UserNameTextBox.Text;
-                string email = (EmailTextBox.Foreground.ToString() == "#FFCACACA" || EmailTextBox.Text == "exam@yandex.ru") ? "" : EmailTextBox.Text;
-                string password = (PasswordTextBox.Foreground.ToString() == "#FFCACACA" || PasswordTextBox.Text == "Введите пароль") ? "" : PasswordTextBox.Text;
-                string confirmPassword = (ConfirmPasswordTextBox.Foreground.ToString() == "#FFCACACA" || ConfirmPasswordTextBox.Text == "Повторите пароль") ? "" : ConfirmPasswordTextBox.Text;
-
-                var validationResult = FieldValidator.ValidateRegistration(name, email, password, confirmPassword);
-
-                if (validationResult.IsValid)
+                if (UserNameTextBox == null || EmailTextBox == null ||
+                    PasswordTextBox == null || ConfirmPasswordTextBox == null)
                 {
-                    MainEmpty mainEmptyWindow = new MainEmpty();
-                    mainEmptyWindow.Show();
-                    this.Close();
+                    MessageBox.Show("Ошибка инициализации полей", "Ошибка",
+                                   MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
-                else
+
+                try
                 {
-                    MessageBox.Show(validationResult.GetErrorMessage(), "Ошибки валидации",
-                                  MessageBoxButton.OK, MessageBoxImage.Warning);
+                    string name = (UserNameTextBox.Foreground.ToString() == "#FFCACACA" || UserNameTextBox.Text == "Введите имя пользователя") ? "" : UserNameTextBox.Text;
+                    string email = (EmailTextBox.Foreground.ToString() == "#FFCACACA" || EmailTextBox.Text == "exam@yandex.ru") ? "" : EmailTextBox.Text;
+                    string password = (PasswordTextBox.Foreground.ToString() == "#FFCACACA" || PasswordTextBox.Text == "Введите пароль") ? "" : PasswordTextBox.Text;
+                    string confirmPassword = (ConfirmPasswordTextBox.Foreground.ToString() == "#FFCACACA" || ConfirmPasswordTextBox.Text == "Повторите пароль") ? "" : ConfirmPasswordTextBox.Text;
+
+                    var validationResult = FieldValidator.ValidateRegistration(name, email, password, confirmPassword);
+
+                    if (validationResult.IsValid)
+                    {
+                        // СОХРАНЕНИЕ В РЕПОЗИТОРИЙ
+                        var newUser = new Desktop.Entities.UserModel
+                        {
+                            Name = name,
+                            Email = email,
+                            Password = password
+                        };
+
+                        Desktop.Repository.UserRepository.Register(newUser);
+
+                        MessageBox.Show("Регистрация прошла успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        MainEmpty mainEmptyWindow = new MainEmpty();
+                        mainEmptyWindow.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show(validationResult.GetErrorMessage(), "Ошибки валидации",
+                                      MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка",
-                               MessageBoxButton.OK, MessageBoxImage.Error);
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        // УДАЛИ этот метод если он есть - он дублирует RegisterButton_Click
-        // private void RegisterButton_Click_1(object sender, RoutedEventArgs e) {...}
     }
 
     public static class FieldValidator
@@ -201,4 +205,4 @@ namespace Desktop
             return string.Join("\n", Errors);
         }
     }
-}
+
