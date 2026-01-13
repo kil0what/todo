@@ -24,5 +24,5 @@ WPF приложение.
 
 ## Авторы
 
-* **Вероника Агафонова** - *Разработка* - [[Аккаунт на GitHub](https://github.com/kityashkina)]
-* **Екатерина Кяшкина** - *Разработка* - [[Аккаунт на GitHub](https://github.com/kil0what)]
+* **Юлия Лукашина** - *Разработка* - [[Аккаунт на GitHub](https://github.com/Julia098765/GitHYB)]
+* ***Вероника Агафонова** - *Разработка* - [[Аккаунт на GitHub](https://github.com/kil0what)]
