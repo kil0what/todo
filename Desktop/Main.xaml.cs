@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq; // Добавлено для фильтрации (Лаба 6)
+using System.Linq;
 using System.Windows;
-using System.Windows.Controls; // Добавлено для работы с TextBlock в коде
+using System.Windows.Controls; 
 using Desktop.Entities;
 
 namespace Desktop
