@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq; // Добавлено для фильтрации (Лаба 6)
 using System.Windows;
-using Desktop.Entities; 
+using System.Windows.Controls; // Добавлено для работы с TextBlock в коде
+using Desktop.Entities;
 
 namespace Desktop
 {
@@ -18,24 +20,44 @@ namespace Desktop
                 UserNameLabel.Text = user.Name;
             }
 
+            // Инициализируем список задач
             Tasks = new ObservableCollection<TaskModel>
             {
-                new TaskModel { Title = "Сходить на рыбалку", Time = "9:00am", Description = "Взять удочки", IsDone = false, Date = DateTime.Now },
-                new TaskModel { Title = "Почитать книгу", Time = "11:00am", Description = "2 главы", IsDone = false, Date = DateTime.Now }
+                new TaskModel { Title = "Сходить на рыбалку", Time = "9:00am", Description = "Взять удочки", IsDone = false, Date = DateTime.Now, Category = "Отдых" },
+                new TaskModel { Title = "Почитать книгу", Time = "11:00am", Description = "2 главы", IsDone = false, Date = DateTime.Now, Category = "Учеба" }
             };
 
             TasksListBox.ItemsSource = Tasks;
         }
-        // Кнопка "Готово" - переносит задачу в разряд выполненных
+
+        // --- ЛАБОРАТОРНАЯ №6: ФИЛЬТРАЦИЯ ---
+        private void Category_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (sender is TextBlock clickedCategory)
+            {
+                string category = clickedCategory.Text;
+
+                if (category == "Все")
+                {
+                    // Сбрасываем фильтр — показываем всё
+                    TasksListBox.ItemsSource = Tasks;
+                }
+                else
+                {
+                    // Фильтруем основной список Tasks по нажатой категории
+                    var filtered = Tasks.Where(t => t.Category == category).ToList();
+                    TasksListBox.ItemsSource = filtered;
+                }
+            }
+        }
+
+        // Кнопка "Готово"
         private void DoneButton_Click(object sender, RoutedEventArgs e)
         {
             if (TasksListBox.SelectedItem is TaskModel selectedTask)
             {
                 selectedTask.IsDone = true;
-
-                // Чтобы UI увидел изменения в CheckBox и тексте, обновляем список
                 TasksListBox.Items.Refresh();
-
                 MessageBox.Show($"Задача '{selectedTask.Title}' выполнена!", "Ура");
             }
             else
@@ -44,7 +66,7 @@ namespace Desktop
             }
         }
 
-        // Кнопка "Удалить" - убирает задачу совсем
+        // Кнопка "Удалить"
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             if (TasksListBox.SelectedItem is TaskModel selectedTask)
@@ -61,18 +83,14 @@ namespace Desktop
             }
         }
 
+        // Открытие окна добавления задачи (Лаба 5)
         private void AddTaskButton_Click(object sender, RoutedEventArgs e)
         {
-    AddTaskWindow addWindow = new AddTaskWindow();
-
-            // Указываем владельца, чтобы оно открылось по центру главного окна
+            AddTaskWindow addWindow = new AddTaskWindow();
             addWindow.Owner = this;
 
-            // Если в том окне нажали "Создать" (DialogResult = true)
             if (addWindow.ShowDialog() == true)
             {
-                // Добавляем новую задачу в наш список на экране
-                // Важно: в AddTaskWindow свойство должно называться CreatedTask или NewTask
                 if (addWindow.CreatedTask != null)
                 {
                     Tasks.Add(addWindow.CreatedTask);

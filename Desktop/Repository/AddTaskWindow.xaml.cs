@@ -39,5 +39,10 @@ namespace Desktop
             // Закрываем окно с результатом "ОК"
             this.DialogResult = true;
         }
+
+        private void CategoryComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
