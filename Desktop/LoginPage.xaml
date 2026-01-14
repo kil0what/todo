@@ -1,0 +1,45 @@
+﻿<Page x:Class="Desktop.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Title="LoginPage" Height="600" Width="800" Background="#1A1A1A">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="400"/>
+        </Grid.ColumnDefinitions>
+
+        <Image Grid.Column="0" Source="/Рисунок1.png" Width="200" Height="200" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+            <TextBlock Text="Добро пожаловать!" FontSize="30" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,40"/>
+
+            <Label Content="Почта" FontSize="18" Foreground="White"/>
+            <TextBox x:Name="EmailTextBox" Text="student@university.com" FontSize="16" Background="Transparent" Foreground="#FFCACACA" BorderThickness="0,0,0,1" BorderBrush="#FFCACACA" Margin="5,0,5,20" Padding="0,5"/>
+
+            <Label Content="Пароль" FontSize="18" Foreground="White"/>
+            <TextBox x:Name="PasswordTextBox" Text="Введите пароль" FontSize="16" Background="Transparent" Foreground="#FFCACACA" BorderThickness="0,0,0,1" BorderBrush="#FFCACACA" Margin="5,0,5,10" Padding="0,5"/>
+
+            <Button Content="Восстановить пароль" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFCACACA" Cursor="Hand" Margin="0,0,0,30"/>
+
+            <Button Content="Войти" x:Name="LoginButton" Click="LoginButton_Click" Height="45" Background="#FFDE4949" Foreground="White" FontSize="18" Margin="0,0,0,15">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="15"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <Button Content="Регистрация" x:Name="RegisterButton" Click="RegisterButton_Click" Height="45" Background="#FFDE4949" Foreground="White" FontSize="18">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="15"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Page>
