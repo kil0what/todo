@@ -30,10 +30,27 @@
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,20">
-                <TextBlock Text="Дом" Foreground="Green" Margin="0,0,15,0" Cursor="Hand"/>
-                <TextBlock Text="Работа" Foreground="Orange" Margin="0,0,15,0" Cursor="Hand"/>
-                <TextBlock Text="Учеба" Foreground="Blue" Margin="0,0,15,0" Cursor="Hand"/>
-                <TextBlock Text="Отдых" Foreground="Purple" Cursor="Hand"/>
+                <TextBlock Text="Дом" Foreground="Green" Margin="0,0,15,0" Cursor="Hand" VerticalAlignment="Center"/>
+                <TextBlock Text="Работа" Foreground="Orange" Margin="0,0,15,0" Cursor="Hand" VerticalAlignment="Center"/>
+                <TextBlock Text="Учеба" Foreground="Blue" Margin="0,0,15,0" Cursor="Hand" VerticalAlignment="Center"/>
+                <TextBlock Text="Отдых" Foreground="Purple" Margin="0,0,30,0" Cursor="Hand" VerticalAlignment="Center"/>
+
+                <Button Content="+ Добавить задачу" Click="AddTaskButton_Click" 
+                        Background="#FF5C5C" Foreground="White" Padding="10,5" FontSize="12" Cursor="Hand">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" CornerRadius="12">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </StackPanel>
 
             <ListBox x:Name="TasksListBox" Grid.Row="1" BorderThickness="0" Background="Transparent"
@@ -79,6 +96,7 @@
                         </Style>
                     </Button.Style>
                 </Button>
+
                 <Button Content="Удалить" Click="DeleteButton_Click" Background="#FF5C5C" Foreground="White" Height="35">
                     <Button.Style>
                         <Style TargetType="Button">

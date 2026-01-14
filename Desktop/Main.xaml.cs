@@ -26,21 +26,57 @@ namespace Desktop
 
             TasksListBox.ItemsSource = Tasks;
         }
-
+        // Кнопка "Готово" - переносит задачу в разряд выполненных
         private void DoneButton_Click(object sender, RoutedEventArgs e)
         {
             if (TasksListBox.SelectedItem is TaskModel selectedTask)
             {
                 selectedTask.IsDone = true;
+
+                // Чтобы UI увидел изменения в CheckBox и тексте, обновляем список
                 TasksListBox.Items.Refresh();
+
+                MessageBox.Show($"Задача '{selectedTask.Title}' выполнена!", "Ура");
+            }
+            else
+            {
+                MessageBox.Show("Сначала выбери задачу из списка!");
             }
         }
 
+        // Кнопка "Удалить" - убирает задачу совсем
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             if (TasksListBox.SelectedItem is TaskModel selectedTask)
             {
-                Tasks.Remove(selectedTask);
+                var result = MessageBox.Show("Точно удалить задачу?", "Подтверждение", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Tasks.Remove(selectedTask);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выбери, что удалять-то.");
+            }
+        }
+
+        private void AddTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+    AddTaskWindow addWindow = new AddTaskWindow();
+
+            // Указываем владельца, чтобы оно открылось по центру главного окна
+            addWindow.Owner = this;
+
+            // Если в том окне нажали "Создать" (DialogResult = true)
+            if (addWindow.ShowDialog() == true)
+            {
+                // Добавляем новую задачу в наш список на экране
+                // Важно: в AddTaskWindow свойство должно называться CreatedTask или NewTask
+                if (addWindow.CreatedTask != null)
+                {
+                    Tasks.Add(addWindow.CreatedTask);
+                }
             }
         }
     }
